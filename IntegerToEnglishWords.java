@@ -1,5 +1,5 @@
-// Time Complexity : O(2^n) where n is number of digits in number
-// Space Complexity : O(n)
+// Time Complexity : O(n) where n is number of digits in number
+// Space Complexity : O(1)
 // Did this code successfully run on Leetcode : Yes
 // Any problem you faced while coding this : No
 
