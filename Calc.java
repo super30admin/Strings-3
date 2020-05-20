@@ -4,6 +4,7 @@
 // Any problem you faced while coding this : No
 class Solution {
     public int calculate(String s) {
+        if(s.length()==0) return 0;
         Stack<Integer> st = new Stack<>();
         int num = 0;
         Character sign = '+';
