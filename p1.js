@@ -2,7 +2,7 @@
 //  Integer to English Words (https://leetcode.com/problems/integer-to-english-words/)
 
 // Time Complexity : O(n)
-// Space Complexity : O(n)
+// Space Complexity : O(1)
 // Did this code successfully run on Leetcode : Yes
 
 // Approach: Check if number is in billion, if it is not in billion then check if it is in million.
