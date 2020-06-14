@@ -1,0 +1,78 @@
+PROBLEM 1 - Integer to English
+// Time Complexity :O(n)
+// Space Complexity :O(1)
+// Did this code successfully run on Leetcode :Yes
+
+class Solution {
+    let words0_19 = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"]
+	let wordsTens = ["", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"]
+	let wordsThousands = ["", "Thousand", "Million", "Billion"]
+	func numberToWords(_ num: Int) -> String {
+		
+		guard num != 0 else { return "Zero" }
+		
+		var num = num
+		
+		var i = 0
+		var result = ""
+		while num > 0 {
+			if num % 1000 != 0 {
+				result = helper(num % 1000) + wordsThousands[i] + " " + result
+			}
+			num /= 1000
+			i += 1
+		}
+		return result.trimmingCharacters(in: .whitespaces)
+	}
+	
+	// helper for cases less than 1000
+	private func helper(_ num: Int) -> String {
+		if num == 0 {
+			return ""
+		} else if num < 20 {
+			return words0_19[num] + " "
+		} else if num < 100 {
+			return wordsTens[num/10] + " " + helper(num%10)
+		} else {
+			return words0_19[num/100] + " Hundred " + helper(num%100)
+		}
+	}
+}
+
+
+
+
+PROBLEM 2 - Basic Calculator II
+// Time Complexity :O(n)
+// Space Complexity :O(n)
+// Did this code successfully run on Leetcode :Yes
+
+class Solution {
+    func calculate(_ s: String) -> Int {
+        var num = 0
+        var stack = [Int]()
+        var op = "+"
+
+        for char in s+"+" where char != " " {
+            if let number = char.wholeNumberValue {
+                num = num * 10 + number
+            } else {
+                // handle + - * /
+                switch op {
+                    case "+":
+                    stack.append(num)
+                    case "-":
+                    stack.append(-num)
+                    case "*":
+                    stack.append(stack.removeLast() * num)
+                    case "/":
+                    stack.append(stack.removeLast() / num)
+                   default: break 
+                }
+                num = 0
+                op = String(char)
+            }  
+        }
+        return stack.reduce(0, +)
+    }
+}
