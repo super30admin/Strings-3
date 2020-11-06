@@ -1,0 +1,42 @@
+// time and space complexity : O(N) > length of the string
+class Solution {
+    public int calculate(String s) {
+        Stack<Integer> stack = new Stack<>();
+        char sign = '+';
+        int num = 0;
+        char ch;
+        int index = 0;
+        int result = 0;
+        // traverse the string s
+        
+        while(index < s.length()){
+            ch = s.charAt(index);
+            if(Character.isDigit(ch)){
+                num = num*10 + (ch -'0');
+            }
+            if(! Character.isDigit(ch) && ch != ' ' || index == s.length() - 1) {
+                if(sign == '+'){
+                    stack.push(num);
+                }
+                else if(sign == '-'){
+                    stack.push(-num);
+                }
+                else if(sign == '*'){
+                    int last = stack.pop();
+                    stack.push(last*num);
+                }
+                else if(sign == '/'){
+                    int last = stack.pop();
+                    stack.push(last/num);
+                }
+                num = 0;
+                sign = ch;
+                }
+           index++;
+        }
+        while(! stack.isEmpty()){
+            result += stack.pop();
+        } 
+        return result;
+    }
+}
