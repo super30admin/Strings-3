@@ -1,0 +1,44 @@
+//TC:O(No of digits) ??
+//SC:O(1)
+
+//Approach: Idea is to divide number into triplets and process each triplet digit-by-digit. Additionally build 3 String[] arrays for <20 // 20<x<99 // >100
+
+class Solution {
+    String[] below20;
+    String[] tens;
+    String[] hundreds;
+    public String numberToWords(int num) {
+        below20 = new String[]{"","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"};
+        tens = new String[]{"", "Ten", "Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"};
+        hundreds = new String[]{"","Thousand", "Million", "Billion"};
+        
+        String result = "";
+        if(num==0){
+            return "Zero";
+        }
+        int i = 0;
+        while(num>0){
+            if(num %1000 >0){
+                result = helper(num%1000)  + hundreds[i] + " " + result;
+            }
+            num = num/1000;
+            i++;
+        }
+        
+        return result.trim();
+    }
+    
+    private String helper(int num){
+        
+        if(num==0){
+            return "";
+        }else if(num < 20){     //<20
+            return below20[num] + " ";
+        }else if(num < 100){    //87
+            return tens[num/10] + " " + helper(num%10);
+        }else{                  //453
+            return below20[num/100] + " Hundred " + helper(num%100);
+        }
+        // return "";
+    }
+}   

@@ -1,0 +1,53 @@
+//TC: O(N)
+//SC: O(N)
+
+//Approach: If it's a digit, start nbuilding number (n*10+c-'0')
+//Use last Sign vartiable to determine which action to take
+//For '*' && '/' -> process two digits and push it into stack
+
+Class Solution {
+    public int calculate(String s) {
+        if(s==null || s.length()==0){
+            return 0;
+        }
+        Stack<Integer> stk = new Stack<>();
+        int num = 0;
+        int result = 0;
+        char lastSign = '+';
+        for(int i = 0 ; i < s.length() ; i++){
+            char c = s.charAt(i);
+            if(Character.isDigit(c)){
+                 num = num*10 + c - '0';
+            }
+            
+            if((!Character.isDigit(c) && c!= ' ')|| (i == s.length()-1)){
+                //
+                if(lastSign=='+'){
+                    stk.push(num);
+                }
+                
+                else if(lastSign=='-'){
+                    stk.push(-num);
+                }
+                
+                else if(lastSign=='*'){
+                    stk.push(stk.pop() * num);
+                }
+                
+                else if(lastSign=='/'){
+                    stk.push(stk.pop() / num);
+                }
+                //we assign the current operator=lastSign if it's not a digit
+                lastSign = c;
+                //reset num each time
+                num=0;
+            }
+        }
+        //After adding everything into stack, return total sum of all processed elements of stack
+        while(!stk.isEmpty()){
+            result += stk.pop();
+        }
+        
+        return result;
+    }
+}
