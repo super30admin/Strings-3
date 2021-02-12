@@ -1,5 +1,6 @@
 class Solution:
     def __init__(self):
+        # initialize three arrays below_20, tens and thousands 
         self.below_20 = ['','One', 'Two','Three', 'Four', 'Five','Six', 'Seven', 'Eight',
                    'Nine', 'Ten', 'Eleven', 'Twelve','Thirteen', 'Fourteen', 'Fifteen',
                    'Sixteen', 'Seventeen','Eighteen', 'Nineteen'];
@@ -24,12 +25,17 @@ class Solution:
             return 'Zero'
         res = '';
         i = 0;
+        # process each triplet
         while(num):
             if(num%1000 > 0):
                 res = self.fun(num%1000)  + self.Thousands[i] + ' ' +  res;
             num //= 1000;
             i += 1;
         return res.strip();
+    '''
+    time complexity = O(1)
+    space complexity = O(1)
+    '''
         
             
         
