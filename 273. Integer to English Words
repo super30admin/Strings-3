@@ -1,0 +1,42 @@
+class Solution:
+    def __init__(self):
+        # initialize three arrays below_20, tens and thousands 
+        self.below_20 = ['','One', 'Two','Three', 'Four', 'Five','Six', 'Seven', 'Eight',
+                   'Nine', 'Ten', 'Eleven', 'Twelve','Thirteen', 'Fourteen', 'Fifteen',
+                   'Sixteen', 'Seventeen','Eighteen', 'Nineteen'];
+        self.Tens = ['','Ten', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety']
+        self.Thousands = ['', 'Thousand','Million', 'Billion'];
+    
+    def fun(self, num):
+        if(num == 0):
+            return ''
+        elif(num < 20):
+            return self.below_20[num] + ' ' ;
+        elif(num < 100):
+            return self.Tens[num//10] + ' ' + self.fun(num%10);
+        else:
+            return self.below_20[num//100] + ' ' + 'Hundred' +' ' + self.fun(num%100);
+        
+    
+    
+    def numberToWords(self, num: int) -> str:
+        
+        if(num == 0):
+            return 'Zero'
+        res = '';
+        i = 0;
+        # process each triplet
+        while(num):
+            if(num%1000 > 0):
+                res = self.fun(num%1000)  + self.Thousands[i] + ' ' +  res;
+            num //= 1000;
+            i += 1;
+        return res.strip();
+    '''
+    time complexity = O(1)
+    space complexity = O(1)
+    '''
+        
+            
+        
+        

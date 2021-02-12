@@ -1,0 +1,83 @@
+import re
+class Solution(object):
+    
+    # function to evaluate infix expression
+    def evaluate(self, s):
+        # initialize precision dictionary
+        precidence= { '+' : 1, '-' : 1, '*':2, '/':2};
+        # functions for binary operations
+        ops = {'+': lambda x,y :x+y,
+               '-' : lambda x,y :x-y,
+               '*': lambda x,y :x*y,
+               '/': lambda x,y: x//y }
+        # initialize two stacks, one for storing operands and other for storing operators
+        operandstack, operatorstack = [], [];
+        n = len(s)
+        i = 0;
+        # scan through the infix expression
+        while( i < n):
+            # check whether the current character is digit or not
+            if(s[i].isdigit()):
+                res = 0;
+                # get all the number
+                while(i < n and s[i].isdigit()):
+                    res = res*10 + int(s[i]);
+                    i += 1;
+                
+                # push the number into operandstack
+                operandstack.append(res);
+            else:
+                # if operator stack is empty, push the current character into operatorstack
+                if(not operatorstack):
+                    operatorstack.append(s[i]);
+                
+                else:
+                    # check whether top stack precidence is >= current character precidence
+                    # if greater, pop the top two items from operand stack and process them
+                    # and push the result into operandstack
+                    while(operatorstack and precidence[operatorstack[-1]] >= precidence[s[i]]):
+                        op2 = operandstack.pop();
+                        op1 = operandstack.pop();
+                        operator = operatorstack.pop()
+                        tempres = ops[operator](op1, op2);
+                        operandstack.append(tempres);
+                        
+                    # push the current operator into operator stack
+                    operatorstack.append(s[i]);
+                i += 1;
+            
+        
+        # scan the operator stack and perform the operations 
+        # pop the top two items from operand stack and process them
+        # and push the result into operandstack
+        while(operatorstack):
+            op2 = operandstack.pop();
+            op1 = operandstack.pop();
+            operator = operatorstack.pop()
+            tempres = ops[operator](op1, op2);
+            operandstack.append(tempres);
+        
+                          
+         # return the result      
+        if(len(operandstack) == 1):
+            return operandstack[0];
+        
+    
+    def calculate(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        
+        
+        # replace spaces in the given input string with empty string
+        s = re.sub(' +','', s)
+        
+        return self.evaluate(s)
+        
+        '''
+        time complexity = O(n)
+        space complexity = O(n)
+        '''
+        
+        
