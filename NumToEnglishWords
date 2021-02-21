@@ -1,0 +1,48 @@
+//TC - o(1)
+//SC - o(1)
+class Solution {
+    
+    String [] below20 = {"","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen",
+                        "Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"};
+    String [] tens = {"","Ten","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"};
+    String [] hundreds = {"","Thousand","Million","Billion"};
+    
+    public String numberToWords(int num) {
+        if (num == 0)
+            return "Zero";
+        
+        int i =0;
+        String result = "";
+        
+        while(num > 0) {
+            // we will processing it in 1000 sets as per English words
+            if(num%1000 != 0){
+                result = helper(num%1000) + hundreds[i] + " " + result;
+            }
+            num = num/1000;
+            i++;
+        }
+        return result.trim();
+    }
+    
+    //helper function for each thousand
+    private String helper(int num) {
+        // if it is zero just return 
+        if(num == 0) {
+            return "";
+        } 
+        //below 20 thn take it from below20 array
+        else if(num<20) {
+            return below20[num] + " ";
+        } 
+        //for less thn hundare process first digit from tens and 
+        //call helper function for last digit
+        else if (num < 100) {
+            return tens[num/10] + " " + helper(num%10);
+        } 
+        //else 700 so process seven and call helper for rest of the digits
+        else {
+            return below20[num/100] + " " + "Hundred" + " " + helper(num%100);
+        }
+    }
+}
