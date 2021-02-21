@@ -1,0 +1,48 @@
+
+//Time Complexity - o(n)
+//Space complexity - o(n)
+class Solution {
+    public int calculate(String s) {
+        
+        if(s == null || s.length() == 0)
+            return 0;
+        
+        //initialize sign to + and num to 0
+        int num =0;
+        char lastSign = '+';
+        Stack<Integer> st = new Stack<>();
+        int sum =0;
+        
+        for(int i =0;i<s.length();i++){
+            char c = s.charAt(i);
+            //if it is a digit create num
+            // what if it has two digits - 12
+            //so we need num*10 + c 
+            // we are adding ascii value here so deduct ascii val of zero
+            if(Character.isDigit(c)) {
+                num = num*10 + c - '0';
+            }
+            //if it is not a digit or space 
+            //push last digit with last sign if not * or /
+            //assign new sign to lastSign var
+            //if * or / pop last digit with sign and compute before pushing
+            if((!Character.isDigit(c) && c != ' ') || i == s.length()-1) {
+                if(lastSign == '+') {
+                    st.push(num);
+                }else if(lastSign == '-') {
+                    st.push(-num);
+                }else if (lastSign == '*'){
+                    st.push(st.pop()*num);
+                } else {
+                     st.push(st.pop()/num);
+                }
+                lastSign = c;
+                num =0;
+            }
+        }
+        while(!st.isEmpty()) {
+            sum += st.pop();
+        }
+        return sum;
+    }
+}
