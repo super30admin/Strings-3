@@ -1,0 +1,56 @@
+// Time Complexity :O(s.len)
+// Space Complexity :O(stack.length)
+// Did this code successfully run on Leetcode :
+// Any problem you faced while coding this :
+
+
+// Your code here along with comments explaining your approach
+class Solution {
+    public int calculate(String s) {
+        
+        char lastSign ='+';
+        int num =0;
+        int result =0;
+        Stack<Integer> st = new Stack<>();
+        for(int i=0; i<s.length(); i++)
+        {
+            char c = s.charAt(i);
+           
+            if(Character.isDigit(c))
+            {
+                 //System.out.println(" yes digit = "+ c);
+                num = num * 10 + c -'0';
+            }
+            
+            if((!Character.isDigit(c) && c != ' ') || i== s.length()-1 )
+            {
+                 //System.out.println(" not digit = "+ c);
+                if(lastSign == '+')
+                {
+                    st.push(num);
+                }
+                else if(lastSign == '-')
+                {
+                    st.push(-num);
+                }
+                else if(lastSign == '*')
+                {
+                    st.push(st.pop() * num);
+                }
+                else
+                {
+                    st.push(st.pop() / num);
+                }
+                num =0;
+                lastSign = c;
+            }
+   
+        }
+        
+        while(!st.isEmpty())
+        {
+            result = result+ st.pop();
+        }
+        return result;
+    }
+}
