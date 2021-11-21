@@ -1,0 +1,51 @@
+//Timecomplexity :- O(n);
+//Spacecomplexity:- O(n);
+//Did it run on leetcode:- Yes;
+//What was the problem faced?:- got wrong answers.
+//Your code with approach:- maintaing stack and adding elements in a way where after traversing onnly addition of stack elements
+//is done. While traversing a string if we have * or divide at time of insertion itself we perform and push that result
+//to stack.
+
+class Solution {
+    public int calculate(String s) {
+        Stack<Integer> cache=new Stack<>();
+        int i=0;
+        int number=0;
+        char sign= '+';//5 can be written as +5 and for easy sign manipulation.
+        while(i<s.length()){
+            
+            char ch=s.charAt(i);
+            if(Character.isDigit(ch)){
+                number=number*10+(ch-'0');
+            }
+            if(ch!=' '&&!Character.isDigit(ch)||i==s.length()-1){
+                if(sign=='-'){
+                    cache.push(-number);
+                }
+                else if(sign=='*'){
+                    int temp=cache.pop();
+                    cache.push(temp*number);
+                }
+                else if(sign=='+'){
+                    cache.push(number);
+                }
+                else if(sign=='/'){
+                    int temp=cache.pop();
+                    cache.push(temp/number);
+                }
+                
+              sign=ch;// untill next sign arrives to take operands between previous sign.
+              number=0;
+            }
+            
+            
+            i++;
+        }
+        int output=0;
+        while(!cache.isEmpty()){
+            output=output+cache.pop();
+            
+        }
+        return output;
+    }
+}
