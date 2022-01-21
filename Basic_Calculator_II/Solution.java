@@ -1,4 +1,4 @@
-// Time Complexity : O(n) where b=n is length of inout string
+// Time Complexity : O(n) where n is length of inout string
 // Space Complexity : O(1)
 // Did this code successfully run on Leetcode : Yes
 // Any problem you faced while coding this : No
