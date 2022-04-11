@@ -1,0 +1,45 @@
+//TC = O(n)
+//SC = O(1)
+
+class Solution {
+    public int calculate(String s) {
+        
+        int curr = 0, tail = 0;
+        int res = 0;
+        char lastOp = '+';
+        
+        for(int i=0; i<s.length(); i++){
+            
+            char ch = s.charAt(i);
+            
+            if(Character.isDigit(ch)){
+                curr = curr*10 + (ch - '0');   //for 2 digit num
+            }
+            
+            //we are taking s.len-1 to counter last of the string
+            if(!Character.isDigit(ch) && ch != ' ' || i == s.length()-1){
+                
+                //handling all cases of operands
+                if(lastOp == '+'){
+                    res += curr;
+                    tail = curr;
+                }else if(lastOp == '-'){
+                    res -= curr;
+                    tail = -curr;
+                }else if(lastOp == '*'){
+                    res = res-tail + curr*tail;
+                    tail = tail*curr;
+                }else if(lastOp == '/'){
+                    res = res - tail + tail/curr;
+                    tail = tail/curr;
+                }
+                
+                curr = 0;   //starting new curr from 0
+                lastOp = ch;   //since used all operators, now last opr becomes curr oprtrs
+            }
+        }
+        
+        return res;
+
+    }
+}
