@@ -96,6 +96,7 @@
 /*
     approach: maintain the mess(tail) of new calculated value
     - same thing as expression add operator problem
+        - I dont know how to best explain this in an interview about where I came up with this :| HELP
         - When multiplying : calc - tail + tail x current;  tail = tail * currentNum
         - When dividing : calc - tail + (tail / currentNum); tail = tail / currentNum
     - Maintain a current number ( running number until we hit a operator )
