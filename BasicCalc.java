@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 public class BasicCalc {
 
     // TC: O(n) n - length of the string
@@ -18,6 +20,8 @@ public class BasicCalc {
                 current = current * 10 + c - '0'; // This will help us to get a 2,3-digit numbers
             }
 
+            // it should if and not else if because for the last character in the string,
+            // we need to do two things -> check whether its digit or not, evaluate the expression as we reached an end
             if((!Character.isDigit(c) && c != ' ') || i == s.length() - 1) {
                 if(lastSign == '+') {
                     calc = calc + current;
@@ -40,5 +44,49 @@ public class BasicCalc {
 
         }
         return calc;
+    }
+
+    // Stack approach
+    // TC: O(n)
+    // SC: O(n)
+    public int calculate2(String s) {
+        if(s == null || s.length() == 0) return 0;
+
+        char lastSign = '+';
+        int calc = 0, current = 0;
+        Stack<Integer> stack = new Stack<>();
+
+        for(int i=0; i < s.length(); i++) {
+            char c = s.charAt(i);
+
+            if(Character.isDigit(c)) {
+                current = current * 10 + c - '0'; // This will help us to get a 2,3-digit numbers
+            }
+
+            if((!Character.isDigit(c) && c != ' ') || i == s.length() - 1) {
+                if(lastSign == '+') {  // This will evaluate to true for the very first number in the string
+                    stack.push(current);
+                }else if(lastSign == '-') {
+                    stack.push(-current);
+                }else if(lastSign == '*') {
+                    stack.push(stack.pop() * current);
+                }else if(lastSign == '/') {
+                    stack.push(stack.pop() / current);
+                }
+
+                lastSign = c;
+                current = 0;
+            }
+
+        }
+        while(!stack.isEmpty()) {
+            calc = calc + stack.pop();
+        }
+        return calc;
+    }
+
+    public static void main(String[] args) {
+        BasicCalc calc = new BasicCalc();
+        calc.calculate2("7*4");
     }
 }
