@@ -1,92 +1,33 @@
-'''
-Using Stack Approach
-Time: O(n)
-Space: O(n), stack st space
-'''
+# Time: O(1) as max triplets can be three each triplets goes through the helper four times so O(12)
+# Space: O(1)
 
 class Solution:
-    def calculate(self, s: str) -> int:
+    def numberToWords(self, num: int) -> str:
         
-        if s == '' or len(s) == 0:
-            return 0
+        self.below_20 = ['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen']
+        self.tens = ['','Ten','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety']
+        self.thousands = ['','Thousand','Million','Billion']
         
-        st = list()
+        if num == 0:
+            return 'Zero'
         
-        curr = 0
-        lastsign = '+'
-        
-        for i in range(len(s)):
-            c = s[i]
-            
-            if c.isdigit():
-                curr = curr * 10 + ord(c) - ord('0')
-            
-            if (not c.isdigit() and c != ' ') or i == len(s) - 1:
-                if lastsign == '+':
-                    st.append(curr)
-                
-                elif lastsign == '-':
-                    st.append(-curr)
-                
-                elif lastsign == '*':
-                    st.append(st.pop()*curr)
-                
-                else:
-                    st.append(int(st.pop()/curr))
-                
-                curr = 0
-                lastsign = c
-        result = 0
-        while len(st) != 0:
-            result += st.pop()
-        return result
-
-
-'''
-Using calc and tail Approach
-Time: O(n)
-Space: O(1)
-'''
-
-
-class Solution:
-    def calculate(self, s: str) -> int:
-        
-        if s == '' or len(s) == 0:
-            return 0
-        
-        curr = 0
-        calc = 0
-        tail = 0
-        lastsign = '+'
-        
-        for i in range(len(s)):
-            c = s[i]
-            
-            if c.isdigit():
-                curr = curr * 10 + int(c)
-                # curr = curr * 10 + ord(c) - ord('0')
-            
-            if (not c.isdigit() and c != ' ') or i == len(s) - 1:
-                
-                if lastsign == '+':
-                    calc = calc + curr
-                    tail = +curr
-                    
-                elif lastsign == '-':
-                    calc = calc - curr
-                    tail = -curr
-                
-                elif lastsign == '*':
-                    calc = calc - tail + (tail * curr)
-                    tail = tail * curr
-                
-                else:
-                    calc = calc - tail + int(tail / curr)
-                    tail = int(tail / curr)
-            
-                
-                curr = 0
-                lastsign = c
-        return calc
+        # getting triplets from the number
+        result = ''
+        i = 0 # pointer on thousands array
+        while num > 0:
+            if num % 1000 != 0:
+                result = self.helper(num%1000) + self.thousands[i] + ' ' + result 
+            i += 1
+            num = int(num/1000)
+        return result.strip()
+    
+    def helper(self, num):
+        if num == 0:
+            return ''
+        elif num < 20:
+            return self.below_20[num] + ' '
+        elif num < 100:
+            return self.tens[int(num/10)] + ' ' + self.helper(int(num % 10))
+        else:
+            return self.below_20[int(num/100)] + ' Hundred ' + self.helper(num % 100) 
         
