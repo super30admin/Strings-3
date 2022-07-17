@@ -32,9 +32,10 @@ class Solution:
                 result.appendleft(self.helper(curr) + hundreds[ptr])
             num = num//1000
             ptr += 1
+        print(result)
         result = ''.join(result)
         result = result.strip(result[-1])
         return result
 
 
-print(Solution().numberToWords(1000))
+print(Solution().numberToWords(123456))
