@@ -7,9 +7,8 @@ class BuildCalculator2 {
     public int calculate(String s) {
 
         int res = 0;
-        char lastOpr = '+';
         int lastOpd = 0;
-        int curOpr = '+';
+        char curOpr = '+';
         int curOpd = 0;
 
         for(int i=0; i<s.length(); i++) {
