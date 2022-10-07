@@ -1,0 +1,73 @@
+Integer to English Words
+#tc:O(logn)
+#sc:O(1)
+class Solution:
+    def numberToWords(self, num: int) -> str:
+        if num==0:
+            return "Zero"
+        belowTwenty = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
+                    "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen",
+                    "Sixteen", "Seventeen", "Eighteen", "Nineteen"]
+        tens = ["", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", 
+            "Eighty", "Ninety"]
+        def helper(num: int) -> str:
+            if num<20:
+                s = belowTwenty[num]
+            elif num<100:
+                s = tens[num//10] + " " + belowTwenty[num%10]
+            elif num<1000:
+                s = helper(num//100) + " Hundred " + helper(num%100)
+            elif num<1000000:
+                s = helper(num//1000) + " Thousand " + helper(num%1000)
+            elif num<1000000000:
+                s = helper(num//1000000) + " Million " + helper(num%1000000)
+            else:
+                s = helper(num//1000000000) + " Billion " + helper(num%1000000000)
+            return s.strip()
+        return helper(num)
+        
+     # Basic Calculator II
+     #tc:O(len(s))
+#sc:O(1)
+class Solution:
+
+    def calculate(self, s: str) -> int:
+        if len(s) == 0: 
+            return 0
+        s = s.replace(" ", "")
+        curr_number = prev_number = result = 0 
+        operation = "+" 
+        
+        i = 0 
+        while i < len(s): 
+            char = s[i] 
+            if char.isdigit(): 
+                while i < len(s) and s[i].isdigit():
+                    curr_number = curr_number * 10 + int(s[i]) 
+                    i += 1 
+                i -= 1 
+                
+                if operation == "+": 
+                    result += curr_number 
+                    prev_number = curr_number 
+                    
+                elif operation == "-": 
+                    result -= curr_number 
+                    prev_number = -curr_number 
+                    
+                elif operation == "*":
+                    result -= prev_number 
+                    result += prev_number * curr_number 
+                    prev_number = prev_number * curr_number 
+                    
+                elif operation == "/":
+                    result -= prev_number 
+                    result += int(prev_number/curr_number) 
+                    prev_number = int(prev_number/curr_number) 
+                    
+                curr_number = 0 
+            else:
+                operation = char
+                
+            i += 1
+        return result
