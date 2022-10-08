@@ -1,0 +1,47 @@
+#  273. Integer to English Words
+'''
+Leetcode all test cases passed: Yes
+class Solution:
+   def numberToWords(self, num: int) -> str:
+      n is length of num
+      Time Complexity: O(1)
+      Space Complexity: O(1)
+'''
+class Solution:
+   
+    def numberToWords(self, num: int) -> str:
+        
+        if num == 0:
+            return "Zero"
+        
+        single_digit = ["","One ","Two ","Three ","Four ","Five ","Six ","Seven ","Eight ","Nine "]
+        below_20=["","Eleven ","Twelve ","Thirteen ","Fourteen ","Fifteen ","Sixteen ","Seventeen ","Eighteen ","Nineteen "]
+        tens = ["","Ten ","Twenty ","Thirty ","Forty ","Fifty ","Sixty ","Seventy ","Eighty ","Ninety "]
+        comb = ["","Thousand ","Million ","Billion "]
+       
+        def helper(num):
+            if num < 10:
+                return single_digit[num]
+            elif num == 10:
+                return "Ten "
+            elif num < 20:
+                return below_20[num - 10]
+            else:
+                return tens[int(num / 10)] + single_digit[num % 10]
+        temp = num
+        result = []
+        count = 0
+        while temp != 0:
+            curr = temp %1000
+            if curr != 0:
+                ans = ""
+
+                if len(str(curr)) == 3:
+                    ans += helper(int(curr / 100)) + "Hundred " + helper(curr % 100) 
+                else:
+                    ans += helper(curr % 100) 
+
+                result.append(ans + comb[count])
+            count += 1
+            temp = int(temp / 1000)
+        return "".join(result[::-1])[:-1]
