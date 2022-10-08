@@ -1,0 +1,45 @@
+#  227. Basic Calculator II
+'''
+Leetcode all test cases passed: Yes
+class Solution:
+   def calculate(self, s: str) -> int:
+      n is length of s
+      Time Complexity: O(n)
+      Space Complexity: O(n)
+'''
+class Solution:
+    def calculate(self, s: str) -> int:
+        stack = []
+        curr = "0"
+        lastOperator = "+"
+        for ch in s:
+            if ch == "+" or ch == "-" or ch == "*" or ch == "/":
+                if lastOperator == "+":
+                    stack.append(int(curr))
+                elif lastOperator == "-":
+                    stack.append(-int(curr))
+                elif lastOperator == "/":
+                    num = stack.pop()
+                    stack.append(int(num / int(curr)))
+                elif lastOperator == "*":
+                    num = stack.pop()
+                    stack.append(num * int(curr))
+                curr = "0"
+                lastOperator = ch
+            else:
+                if ch != " ":
+                    curr += ch
+        if lastOperator == "+":
+            stack.append(int(curr))
+        elif lastOperator == "-":
+            stack.append(-int(curr))
+        elif lastOperator == "/":
+            num = stack.pop()
+            stack.append(int(num / int(curr)))
+        elif lastOperator == "*":
+            num = stack.pop()
+            stack.append(num * int(curr))
+        res = 0
+        while stack:
+            res += stack.pop()
+        return res
