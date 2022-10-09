@@ -1,0 +1,29 @@
+class Solution:
+    def calculate(self, s: str) -> int:
+        res = 0
+        t = 0
+        n = 0
+        sign = "+"
+        for i in range(len(s)):
+            if s[i].isdigit():
+                n = n * 10 + ord(s[i]) - ord('0')
+            if (not s[i].isdigit() and s[i] != " ") or i == len(s)-1:
+                if sign == "+":
+                    res+=n
+                    t = n
+                elif sign == "-":
+                    res-=n
+                    t = -n
+                elif sign == "*":
+                    res = res - t + (t*n)
+                    t = t*n
+                elif sign == "/":
+                    res = res - t + (int(t/n))
+                    t = int(t/n)
+                sign = s[i]
+                n = 0
+        return res
+    
+# Time Complexity: O(n)
+# Space Complexity: O(1)
+# Successfully implemented on Leetcode
