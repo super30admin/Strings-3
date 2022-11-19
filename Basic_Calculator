@@ -1,0 +1,42 @@
+//TimeComplexity  O(n)
+//SpaceComplexity O(1)
+
+class Solution {
+    public int calculate(String s) {
+        
+        int curr = 0;
+        int tail = 0;
+        int cal = 0;
+        char lastsign = '+';
+
+        for(int i = 0 ; i < s.length(); i++){
+            char ch = s.charAt(i);
+
+            if(Character.isDigit(ch)){
+                curr = curr * 10 + ch - '0';
+            }
+            if((!Character.isDigit(ch) && ch != ' ')||i == s.length() - 1){
+                if(lastsign == '+'){
+                   cal = cal + curr;
+                   tail = curr;
+                }
+                 else if(lastsign == '-'){
+                    cal = cal - curr;
+                   tail = -curr;
+                }
+                 else if(lastsign == '*'){
+                     cal = cal - tail + (tail * curr);
+                    tail = tail * curr;
+                }
+                 else if(lastsign == '/'){
+                     cal = cal - tail +  (tail / curr);
+                    tail = tail/curr;
+                }
+                curr = 0;
+                lastsign = ch;
+            }
+
+        }
+        return cal;
+    }
+}
