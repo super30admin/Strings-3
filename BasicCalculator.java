@@ -51,6 +51,7 @@ public class BasicCalculator {
 }
 
 /*
+ * TC - O(n)
  * Approach 2: Evaluate without using a Stack; This method is specfic to this problem.
  * 1 - Maintain a number, calculated value and a tail. Incoming number is num.
  * 2 - If * comes, we need to subtract the tail from the calculated value and multiply that tail with incoming num
