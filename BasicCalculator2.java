@@ -1,6 +1,6 @@
 import java.util.Stack;
 //Time - O(n)
-//Space  - O(n)
+//Space  - O(1)
 
 public class BasicCalculator2 {
 	public int calculate(String s) {
