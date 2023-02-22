@@ -2,7 +2,7 @@
 # O(1) - We will need at max 12 steps for any number in the given range of numbers
 
 # Space Complexity :
-# O(1)
+# O(1) - Even the stack depth is number of digits at max (12)
 
 # Did this code successfully run on Leetcode :
 #Yes
