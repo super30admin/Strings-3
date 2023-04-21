@@ -1,0 +1,41 @@
+//time complexity : O(n)
+//space complexity: O(1)
+//without stack
+class BasicCalculatorIIWithoutStack {
+    public int calculate(String s) {
+        int calculate=0 ;
+        int tail=0;
+        int n= s.length();
+        char lastSign = '+';
+        int curr=0;
+        for(int i=0; i<n; i++){
+            char c= s.charAt(i);
+           if(Character.isDigit(c)){
+               curr= curr*10+ c-'0';
+           }
+           if((!Character.isDigit(c) && c!= ' ') || i==n-1){
+               if(lastSign == '+'){
+                 calculate += curr;
+                 tail = curr;
+               }
+                else if(lastSign == '-'){
+                 calculate -= curr;
+                 tail = -curr;
+               }
+                else if(lastSign == '*'){
+                calculate= calculate-tail + tail*curr;
+                tail= tail*curr;
+
+               }
+               else{
+                  calculate= calculate-tail + tail/curr;
+                tail= tail/curr;
+               }
+               curr=0;
+               lastSign= c;
+           }
+        }
+       
+        return calculate;
+    }
+}
