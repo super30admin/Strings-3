@@ -1,6 +1,7 @@
 class Solution:
     # Time Complexity: O(1)
     # Space Complexity: O(1)
+
     global thousands, U20, tens
     thousands = ['', 'Thousand', 'Million', 'Billion']
     U20 = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve',
