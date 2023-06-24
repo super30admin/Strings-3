@@ -20,8 +20,10 @@ public class BasicCalc {
                 current = current * 10 + c - '0'; // This will help us to get a 2,3-digit numbers
             }
 
-            // it should if and not else if because for the last character in the string,
-            // we need to do two things -> check whether its digit or not, evaluate the expression as we reached an end
+            // It should be if and not else if because for the last character in the string,
+            // For example, 3 + 24 * 2 -> Here, at 2, we need to evaluate the above condition as well as the (i = s.length() - 1) condition mentioned below
+                // Putting else if will evaluate either of the two conditions and not the both
+            //We need to do two things -> check whether it's a digit or not, evaluate the expression as we reach an end
             if((!Character.isDigit(c) && c != ' ') || i == s.length() - 1) {
                 if(lastSign == '+') {
                     calc = calc + current;
