@@ -1,0 +1,35 @@
+//273. Integer to English Words
+// Time complexity o(n) Space complexity o(1)
+class Solution {
+    String[] below_20;
+    String[] below_100;
+    public String numberToWords(int num) {
+        if(num==0) return "Zero";
+         below_20 = new String[]{"","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"};
+     below_100=new String[]{"","","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"};
+    String[] suffix= new String[]{"","Thousand","Million","Billion"};
+    String res="";
+    int i=0;
+    while(num>0){
+       int triplet= num%1000;
+       if(triplet>0){
+           res = helper(triplet).trim()+" "+suffix[i]+" "+res;
+       } 
+       i++;
+       num=num/1000;
+    }
+    return res.trim();
+    }
+    public String helper(int num){
+
+        if(num<20){
+            return below_20[num];
+        }
+        else if(num<100){
+            return below_100[num/10] + " " + helper(num%10);
+        }
+        else{
+            return below_20[num/100] +" Hundred "+helper(num%100);
+        }
+    }
+}
