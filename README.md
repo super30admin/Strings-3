@@ -1,7 +1,7 @@
 # Strings-3
 
 ## Problem1 
- Integer to English Words (https://leetcode.com/problems/integer-to-english-words/)
+Integer to English Words (https://leetcode.com/problems/integer-to-english-words/)
  
 
 ## Problem2 
