@@ -1,0 +1,36 @@
+#Integer to English Words
+
+# The time complexity of the solution is O(N), and the space complexity is O(1), where N is the number of digits in the input integer num.
+
+class Solution:
+    def numberToWords(self, num: int) -> str:
+        if num == 0:
+            return "Zero"
+        
+        # Define lists of words
+        less_than_20 = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+                         "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"]
+        tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"]
+        thousands = ["", "Thousand", "Million", "Billion"]
+        
+        # Helper function to convert three digits into words
+        def convert_three_digits(num):
+            if num == 0:
+                return ""
+            elif num < 20:
+                return less_than_20[num] + " "
+            elif num < 100:
+                return tens[num // 10] + " " + convert_three_digits(num % 10)
+            else:
+                return less_than_20[num // 100] + " Hundred " + convert_three_digits(num % 100)
+        
+        # Initialize result string
+        result = ""
+        
+        # Iterate through the number groups
+        for i in range(len(thousands)):
+            if num % 1000 != 0:
+                result = convert_three_digits(num % 1000) + thousands[i] + " " + result
+            num //= 1000
+        
+        return result.strip()
