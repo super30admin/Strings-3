@@ -1,0 +1,66 @@
+T.c --> O(n), 
+S.c --> O(1).
+class Solution {
+    public int calculate(String s) {
+        int curr = 0;
+        char lastsign = '+';
+        int calc = 0;
+        int tail = 0;
+        for(int i =0; i<s.length(); i++){
+           char c = s.charAt(i);
+           if(Character.isDigit(c)){
+            curr = curr*10 + c -'0';
+           } 
+           if((!Character.isDigit(c) && c != ' ') || i == s.length()-1){
+            if(lastsign == '+'){
+              calc = calc + curr;
+              tail = curr;
+            }else if(lastsign == '-'){
+              calc = calc - curr;
+              tail = -curr;
+            }else if(lastsign == '*'){
+              calc = calc - tail + tail*curr ;
+              tail = tail*curr;
+            }else if(lastsign == '/'){
+              calc = calc - tail + tail/curr ;
+              tail = tail/curr;
+            }            
+           curr = 0;
+           lastsign = c;
+           }           
+        }
+        return calc;
+    }
+}
+***************************************************************************************
+T.c --> O(n), S.c --> O(n)
+class Solution {
+    public int calculate(String s) {
+        int curr = 0;
+        char lastsign = '+';
+        Stack<Integer> stack = new Stack();
+        for(int i =0; i<s.length(); i++){
+           char c = s.charAt(i);
+           if(Character.isDigit(c)){
+            curr = curr*10 + c -'0';
+           } 
+           if((!Character.isDigit(c) && c != ' ') || i == s.length()-1){
+            if(lastsign == '+'){
+              stack.push(curr);
+            }else if(lastsign == '-'){
+              stack.push(-curr);
+            }else if(lastsign == '*'){
+              stack.push(stack.pop()*curr);
+            }else if(lastsign == '/'){
+              stack.push(stack.pop()/curr);
+            }            
+           curr = 0;
+           lastsign = c;
+           }           
+        }
+        while(!stack.isEmpty()){
+          curr = curr+stack.pop();
+        }
+        return curr;
+    }
+}
