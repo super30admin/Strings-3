@@ -1,0 +1,47 @@
+/**************
+Time O(n)
+Space O(n)
+Leetcode yes
+problem no
+
+Iterate through the string. if encounter a + , add num directly to stack, if - ,add -num to stack, if + pop off top element from
+stack , multiply it with num and add it to stack, same for /.
+In the end we simply have to add all the numbers in the stack as we already taken care of - * and / operators before only
+***************/
+class Solution {
+    public int calculate(String s) {
+        
+	        if(s.length()==0) 
+                return 0;
+	        
+            Stack<Integer> stack = new Stack<>();
+	        int sum = 0;
+	        int num = 0;
+	        
+             char operator = '+';
+	        for(int i=0;i<s.length();i++)
+            {
+	            char c = s.charAt(i);
+	            
+                if(Character.isDigit(c))
+                {
+	                num = 10*num + c - '0';
+	            }
+	            
+                if(!Character.isDigit(c) && c !=' ' || i==s.length()-1)
+                {
+	                if(operator == '+') stack.push(num);
+	                if(operator == '-') stack.push(-num);
+	                if(operator == '*') stack.push(stack.pop()*num);
+	                if(operator == '/') stack.push( stack.pop()/num);
+	                operator = c;
+	                num =0;
+	            }
+	        }
+
+	        while(!stack.isEmpty()){
+	            sum = sum +stack.pop();
+	        }
+	        return sum;
+	    }
+}
