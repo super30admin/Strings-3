@@ -1,0 +1,33 @@
+class Solution:
+    def calculate(self, s: str) -> int:
+        if s == None or len(s) == 0:
+            return 0
+        num = 0
+        cal = 0
+        tail = 0
+        lastsign = '+'
+        for i in range(len(s)):
+            c = s[i]
+            if c.isdigit():
+                num = num * 10 + int(c)
+            if (not c.isdigit() and c != ' ') or (i == len(s)-1):
+                if lastsign == '+':
+                    cal += num
+                    tail = +num
+                if lastsign == '-':
+                    cal -= num
+                    tail = -num
+                if lastsign == '*':
+                    cal = cal - tail + tail*num
+                    tail = tail * num
+                if lastsign == '/':
+                    cal = cal - tail + int(tail/num)
+                    tail = int(tail/num)
+                lastsign = c
+                num = 0
+        return cal
+
+#time = O(n)
+#space = O(1)
+
+            
