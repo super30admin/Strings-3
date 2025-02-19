@@ -44,6 +44,7 @@ public class BasicCalculator2 {
             return below20[num / 100] + " Hundred " + createUnderThousand(num % 100);
         }
     }
+
     public static void main(String[] args) {
         // Your code here
         BasicCalculator2 obj = new BasicCalculator2();
