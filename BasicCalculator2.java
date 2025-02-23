@@ -9,49 +9,55 @@
  */
 
 public class BasicCalculator2 {
-    String[] below20 = new String[] { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
-            "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
-    String[] placeValue = new String[] { "", "Thousand", "Million", "Billion" };
+    public int calculate(String s) {
+        if (s.length() == 1) {
+            return s.charAt(0) - '0';
+        }
 
-    String[] tens = new String[] { "", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty",
-            "Ninety" };
+        int calc = 0;
+        int num = 0;
+        int tail = 0;
+        char lastSign = '+';
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
 
-    public String numberToWords(int num) {
-        if (num == 0)
-            return "Zero";
-
-        String result = "";
-        int i = 0;
-        while (num > 0) {
-            if (num % 1000 != 0) {
-                result = createUnderThousand(num % 1000) + placeValue[i] + " " + result;
+            if (Character.isDigit(c)) {
+                num = num * 10 + c - '0';
             }
-            num /= 1000;
-            i++;
-        }
 
-        return result.trim();
-    }
+            if ((!Character.isDigit(c) && c != ' ') || (i == s.length() - 1)) {
+                if (lastSign == '+') {
+                    calc = calc + num;
+                    tail = +num;
+                }
 
-    private String createUnderThousand(int num) {
-        if (num == 0)
-            return "";
-        else if (num < 20) {
-            return below20[num] + " ";
-        } else if (num < 100) {
-            return tens[num / 10] + " " + createUnderThousand(num % 10);
-        } else {
-            return below20[num / 100] + " Hundred " + createUnderThousand(num % 100);
+                if (lastSign == '-') {
+                    calc = calc - num;
+                    tail = -num;
+                }
+
+                if (lastSign == '*') {
+                    calc = calc - tail + (tail * num);
+                    tail = tail * num;
+                }
+
+                if (lastSign == '/') {
+                    calc = calc - tail + (tail / num);
+                    tail = tail /num;
+                }
+
+                num = 0;
+                lastSign = c;
+            }
         }
+        return calc;
     }
 
     public static void main(String[] args) {
         // Your code here
         BasicCalculator2 obj = new BasicCalculator2();
-        int num = (int) (Math.pow(2L, 31L) - 1);
-        String result = obj.numberToWords(num);
-        String expString = "Two Billion One Hundred Forty Seven Million Four Hundred Eighty Three Thousand Six Hundred Forty Seven";
-        System.out.println(result);
-        assert (expString == null ? result == null : expString.equals(result));
-    }
+        int num = obj.calculate("123*5*6/8-1234");
+        System.out.println(num);
+        assert (num == -773);
+    }   
 }
