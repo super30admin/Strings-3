@@ -1,11 +1,21 @@
 /**
- * Time Complexity: 
- * Space Complexity: 
- * Did this code successfully run on Leetcode: Yes/No
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ * Did this code successfully run on Leetcode: Yes
  * Any problem you faced while coding this: None
 
  * Approach:
- * Explain your approach here.
+ * Iterate through the string character by character.
+ * If the character is a digit, update num by shifting its previous value (to handle multi-digit numbers).
+ * If the character is an operator or the last character in the string:
+ * Process the previous number with respect to lastSign.
+ * Update calc and tail accordingly.
+ * Reset num and store the current operator in lastSign.
+ * + : Add num to calc, update tail with num.
+ * - : Subtract num from calc, update tail with -num.
+ * * : Since * has higher precedence than + or -, correct the previous operation by subtracting tail from calc and
+ *  replacing it with the new multiplication result.
+ * / : Similar to *, adjust calc by replacing tail with its division result.
  */
 
 public class BasicCalculator2 {
