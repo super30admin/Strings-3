@@ -1,0 +1,82 @@
+## Problem1 
+class Solution {
+    private static final String[] below_20 = {
+        "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+        "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"
+    };
+
+    private static final String[] tens = {
+        "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"
+    };
+
+    private static final String[] thousands = {"", "Thousand", "Million", "Billion"};
+
+    public String numberToWords(int num) {
+        if (num == 0) return "Zero";  
+        
+        String word = "";
+        int i = 0;  
+
+        while (num > 0) {
+            if (num % 1000 != 0) {  
+                word = helper(num % 1000) + thousands[i] + " " + word;
+            }
+            num /= 1000;  
+            i++;
+        }
+
+        return word.trim();  
+    }
+
+    private String helper(int num) {
+        if (num == 0) return "";
+        else if (num < 20) return below_20[num] + " ";  
+        else if (num < 100) return tens[num / 10] + " " + helper(num % 10);  
+        else return below_20[num / 100] + " Hundred " + helper(num % 100);  
+    }
+}
+
+## Problem2 
+class Solution {
+    public int calculate(String s) {
+        if (s == null || s.length() == 0) return 0;
+
+        Stack<Integer> stack = new Stack<>();
+        int num = 0;
+        char operator = '+'; 
+        s = s.trim(); 
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            
+            if (Character.isDigit(ch)) {
+                num = num * 10 + (ch - '0'); 
+            }
+
+            if (!Character.isDigit(ch) && ch != ' ' || i == s.length() - 1) {
+                
+                if (operator == '+') {
+                    stack.push(num);
+                } else if (operator == '-') {
+                    stack.push(-num);
+                } else if (operator == '*') {
+                    stack.push(stack.pop() * num);
+                } else if (operator == '/') {
+                    stack.push(stack.pop() / num); 
+                }
+
+                operator = ch; 
+                num = 0; 
+            }
+        }
+
+        
+        int result = 0;
+        while (!stack.isEmpty()) {
+            result += stack.pop();
+        }
+
+        return result;
+    }
+
+}
